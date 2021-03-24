@@ -5,8 +5,13 @@ import javafx.scene.paint.Color;
 public class Constants {
      // TODO: fill this class in with any more constants you might need!
 
-    // width of each square
+     // width of each square
     public static final int SQUARE_WIDTH = 30;
+
+    public static final int ROWS = 24;
+    public static final int COLUMNS = 12;
+    public static final int SCENE_WIDTH = COLUMNS*SQUARE_WIDTH;
+    public static final int SCENE_HEIGHT = (ROWS+1)*SQUARE_WIDTH;
 
     // coordinates for squares in each tetris piece
     public static final int[][] I_PIECE_COORDS = { {0, 0}, {0, SQUARE_WIDTH}, {0, 2*SQUARE_WIDTH}, {0, 3*SQUARE_WIDTH} };
