@@ -7,28 +7,41 @@ import javafx.scene.shape.*;
 public class Game {
     private BorderPane _root;
     private HBox _bottomPane;
-    private Square[][] _border;
+    private Square[][] _board;
+    private Square _square;
+
+    private double xVal;
+    private double yVal;
 
     public Game(BorderPane root, HBox bottomPane) {
         _root = root;
         _bottomPane = bottomPane;
-        _border = new Square[Constants.ROWS][Constants.COLUMNS];
+        _board = new Square[Constants.ROWS][Constants.COLUMNS];
         this.setupBorder();
         this.setupShape();
+        new Piece(root);
     }
 
     public void setupBorder() {
         for(int i=0; i<Constants.ROWS; i++) {
             if(i==0 || i==Constants.ROWS-1) {
                 for(int j=0; j<Constants.COLUMNS; j++) {
-                    _border[i][j] = new Square(i, j, _root);
+                    _board[i][j] = new Square(_root, Color.GRAY);
+                    xVal = j*Constants.SQUARE_WIDTH;
+                    yVal = i*Constants.SQUARE_WIDTH;
+                    _square.setX(xVal);
+                    _square.setY(yVal);
                 }
             }
         }
         for(int j=0; j<Constants.COLUMNS; j++) {
             if(j==0 || j==Constants.COLUMNS-1) {
                 for(int i=0; i<Constants.ROWS; i++) {
-                    _border[i][j] = new Square(i, j, _root);
+                    xVal = j*Constants.SQUARE_WIDTH;
+                    yVal = i*Constants.SQUARE_WIDTH;
+                    _board[i][j] = new Square(_root, Color.GRAY);
+                    _square.getSquare().setX(xVal);
+                    _square.getSquare().setY(yVal);
                 }
             }
         }
@@ -45,10 +58,10 @@ public class Game {
         rect3.setX(6*Constants.SQUARE_WIDTH);
         rect4.setX(6*Constants.SQUARE_WIDTH);
 
-        rect1.setY(6*Constants.SQUARE_WIDTH);
-        rect2.setY(7*Constants.SQUARE_WIDTH);
-        rect3.setY(8*Constants.SQUARE_WIDTH);
-        rect4.setY(9*Constants.SQUARE_WIDTH);
+        rect1.setY(1*Constants.SQUARE_WIDTH);
+        rect2.setY(2*Constants.SQUARE_WIDTH);
+        rect3.setY(3*Constants.SQUARE_WIDTH);
+        rect4.setY(4*Constants.SQUARE_WIDTH);
 
         rect1.setStroke(Color.BLACK);
         rect2.setStroke(Color.BLACK);
