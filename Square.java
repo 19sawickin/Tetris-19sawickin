@@ -27,6 +27,6 @@ public class Square {
         _square.setX(xVal);
     }
     public void setY(double yVal) {
-        _square.setX(yVal);
+        _square.setY(yVal);
     }
 }

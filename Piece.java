@@ -12,7 +12,6 @@ public class Piece {
     public Piece(BorderPane root) {
         _root = root;
         this.generateI();
-
     }
 
     public void generateI() {
