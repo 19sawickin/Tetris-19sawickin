@@ -6,19 +6,19 @@ import javafx.scene.shape.*;
 
 public class Game {
     private BorderPane _root;
-    private HBox _bottomPane;
     private Square[][] _board;
     private Square _square;
+    private Piece _piece;
 
     private double xVal;
     private double yVal;
 
-    public Game(BorderPane root, HBox bottomPane) {
+    public Game(BorderPane root) {
         _root = root;
-        _bottomPane = bottomPane;
         _board = new Square[Constants.ROWS][Constants.COLUMNS];
         this.setupBorder();
-        new Piece(root);
+        _piece = new Piece(Constants.INITIAL_COORDS, Color.RED, _root);
+        _piece.generatePiece();
     }
 
     public void setupBorder() {

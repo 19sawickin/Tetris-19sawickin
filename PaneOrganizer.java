@@ -13,7 +13,8 @@ public class PaneOrganizer {
         _root = new BorderPane();
         _bottomPane = new HBox();
         this.addButton();
-        new Game(_root, _bottomPane);
+        _root.setBottom(_bottomPane);
+        new Game(_root);
 
     }
 

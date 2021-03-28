@@ -12,8 +12,6 @@ public class Square {
     public Square(BorderPane root, Color color) {
         _root = root;
         _square = new Rectangle(Constants.SQUARE_WIDTH, Constants.SQUARE_WIDTH);
-        //_square.setX(j*Constants.SQUARE_WIDTH);
-        //_square.setY(i*Constants.SQUARE_WIDTH);
         _square.setStroke(Color.BLACK);
         _square.setFill(color);
         _root.getChildren().add(_square);
