@@ -39,25 +39,25 @@ public class Game {
         Piece piece = null;
         switch(randInt) {
             case 0:
-                piece = new Piece(Constants.I_PIECE_COORDS, Color.RED, _root);
+                piece = new Piece(Constants.I_PIECE_COORDS, Color.RED, _root, _board);
                 break;
             case 1:
-                piece = new Piece(Constants.T_PIECE_COORDS, Color.ORANGE, _root);
+                piece = new Piece(Constants.T_PIECE_COORDS, Color.ORANGE, _root, _board);
                 break;
             case 2:
-                piece = new Piece(Constants.SQUARE_PIECE_COORDS, Color.PINK, _root);
+                piece = new Piece(Constants.SQUARE_PIECE_COORDS, Color.PINK, _root, _board);
                 break;
             case 3:
-                piece = new Piece(Constants.R_PIECE_COORDS, Color.YELLOW, _root);
+                piece = new Piece(Constants.R_PIECE_COORDS, Color.YELLOW, _root, _board);
                 break;
             case 4:
-                piece = new Piece(Constants.SEVEN_PIECE_COORDS, Color.GREEN, _root);
+                piece = new Piece(Constants.SEVEN_PIECE_COORDS, Color.GREEN, _root, _board);
                 break;
             case 5:
-                piece = new Piece(Constants.BACK_Z_COORDS, Color.LIGHTBLUE, _root);
+                piece = new Piece(Constants.BACK_Z_COORDS, Color.LIGHTBLUE, _root, _board);
                 break;
             default:
-                piece = new Piece(Constants.Z_PIECE_COORDS, Color.BLUE, _root);
+                piece = new Piece(Constants.Z_PIECE_COORDS, Color.BLUE, _root, _board);
                 break;
         }
         return piece;
@@ -124,11 +124,20 @@ public class Game {
         }
 
         public void handle(ActionEvent kf) {
-            if(_piece.canMove(_board)) {
-                _piece.move(0,Constants.DOWN); //Constants.DOWN
+            int potentialY = Constants.DOWN/Constants.SQUARE_WIDTH;
+            int potentialX = 0;
+            if(_piece.checkMove(potentialY, potentialX)) {
+                _piece.move(0,Constants.DOWN);
+            } else {
+                _piece.move(0, 0); //trying not to move
+
             }
-
+             //Constants.DOWN
+//            if(_piece.canMove(Constants.DOWN)) {
+//                _piece.move(0,Constants.DOWN); //Constants.DOWN
+//            } else {
+//                _piece.move(0,0); //trying to make it not move
+//            }
         }
-
     }
 }
