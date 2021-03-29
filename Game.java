@@ -1,8 +1,15 @@
 package tetris;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
-import javafx.scene.shape.*;
+import javafx.util.Duration;
+import javafx.scene.input.KeyEvent;
+import tetris.Constants.*;
+
 
 public class Game {
     private BorderPane _root;
@@ -12,13 +19,55 @@ public class Game {
 
     private double xVal;
     private double yVal;
+    private int _right;
+    private int _left;
+    private int _down;
+//make game pane
+    private Timeline _timeline;
 
     public Game(BorderPane root) {
         _root = root;
         _board = new Square[Constants.ROWS][Constants.COLUMNS];
         this.setupBorder();
-        _piece = new Piece(Constants.INITIAL_COORDS, Color.RED, _root);
-        _piece.generatePiece();
+        _piece = this.generatePiece();
+        this.setupTimeline();
+        root.addEventHandler(KeyEvent.KEY_PRESSED, new KeyHandler());
+    }
+
+    public Piece generatePiece() {
+        int randInt = (int)(Math.random()*7);
+        Piece piece = null;
+        switch(randInt) {
+            case 0:
+                piece = new Piece(Constants.I_PIECE_COORDS, Color.RED, _root);
+                break;
+            case 1:
+                piece = new Piece(Constants.T_PIECE_COORDS, Color.ORANGE, _root);
+                break;
+            case 2:
+                piece = new Piece(Constants.SQUARE_PIECE_COORDS, Color.PINK, _root);
+                break;
+            case 3:
+                piece = new Piece(Constants.R_PIECE_COORDS, Color.YELLOW, _root);
+                break;
+            case 4:
+                piece = new Piece(Constants.SEVEN_PIECE_COORDS, Color.GREEN, _root);
+                break;
+            case 5:
+                piece = new Piece(Constants.BACK_Z_COORDS, Color.LIGHTBLUE, _root);
+                break;
+            default:
+                piece = new Piece(Constants.Z_PIECE_COORDS, Color.BLUE, _root);
+                break;
+        }
+        return piece;
+    }
+
+    public void setupTimeline() {
+        _timeline = new Timeline
+                (new KeyFrame(Duration.seconds(Constants.DURATION), new TimeHandler()));
+        _timeline.setCycleCount(Animation.INDEFINITE);
+        _timeline.play();
     }
 
     public void setupBorder() {
@@ -40,5 +89,41 @@ public class Game {
                 }
             }
         }
+    }
+
+    private class KeyHandler implements EventHandler<KeyEvent> {
+
+        public KeyHandler() {
+            _right = Constants.RIGHT;
+            _left = Constants.LEFT;
+            _down = Constants.DOWN;
+
+        }
+
+        public void handle(KeyEvent e) {
+            switch(e.getCode()) {
+                case LEFT:
+                    _piece.move(_left,0);
+                    break;
+                case RIGHT:
+                    _piece.move(_right,0);
+                    break;
+                default:
+                    break;
+            }
+            e.consume();
+        }
+    }
+
+    private class TimeHandler implements EventHandler<ActionEvent> {
+
+        public TimeHandler() {
+
+        }
+
+        public void handle(ActionEvent kf) {
+            _piece.move(0,Constants.DOWN); //Constants.DOWN
+        }
+
     }
 }

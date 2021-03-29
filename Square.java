@@ -17,10 +17,14 @@ public class Square {
         _root.getChildren().add(_square);
     }
 
-    public Rectangle getSquare(){
-        return _square;
+
+    public double getY() {
+        return _square.getY();
     }
 
+    public double getX() {
+        return _square.getX();
+    }
     public void setX(double xVal) {
         _square.setX(xVal);
     }
