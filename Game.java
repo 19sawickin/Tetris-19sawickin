@@ -124,7 +124,10 @@ public class Game {
         }
 
         public void handle(ActionEvent kf) {
-            _piece.move(0,Constants.DOWN); //Constants.DOWN
+            if(_piece.canMove(_board)) {
+                _piece.move(0,Constants.DOWN); //Constants.DOWN
+            }
+
         }
 
     }

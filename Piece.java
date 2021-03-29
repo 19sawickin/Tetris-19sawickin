@@ -12,6 +12,9 @@ public class Piece {
     private Color _color;
     private int[][] _coords;
 
+    double _newXLoc;
+    double _newYLoc;
+
     public Piece(int[][] coords, Color color, BorderPane root) { //add color as well!
         _coords = coords;
         _piece = new Square[4];
@@ -42,10 +45,15 @@ public class Piece {
         double centerX = _piece[2].getX();
         double centerY = _piece[2].getY();
         for(int i=0; i<4; i++) {
-            double newXLoc = centerX - centerY + _piece[i].getY();
-            double newYLoc = centerY + centerX - _piece[i].getX();
-            _piece[i].setX(newXLoc);
-            _piece[i].setY(newYLoc);
+            _newXLoc = centerX - centerY + _piece[i].getY();
+            _newYLoc = centerY + centerX - _piece[i].getX();
+            _piece[i].setX(_newXLoc);
+            _piece[i].setY(_newYLoc);
         }
+    }
+
+    public boolean canMove(Square[][] board) {
+        double futureYLoc
+
     }
 }
