@@ -17,7 +17,6 @@ public class Square {
         _root.getChildren().add(_square);
     }
 
-
     public double getY() {
         return _square.getY();
     }
@@ -26,9 +25,11 @@ public class Square {
         return _square.getX();
     }
     public void setX(double xVal) {
+
         _square.setX(xVal);
     }
     public void setY(double yVal) {
+
         _square.setY(yVal);
     }
 }

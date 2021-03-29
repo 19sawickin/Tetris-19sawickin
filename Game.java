@@ -108,6 +108,8 @@ public class Game {
                 case RIGHT:
                     _piece.move(_right,0);
                     break;
+                case UP:
+                    _piece.rotate();
                 default:
                     break;
             }

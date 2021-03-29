@@ -11,10 +11,6 @@ public class Piece {
     private double yVal;
     private Color _color;
     private int[][] _coords;
-    private int direction;
-    private int _right;
-    private int _left;
-    private int _down;
 
     public Piece(int[][] coords, Color color, BorderPane root) { //add color as well!
         _coords = coords;
@@ -22,13 +18,7 @@ public class Piece {
         _color = color;
         _root = root;
         this.formPiece();
-
-        _right = Constants.RIGHT;
-        _left = Constants.LEFT;
-        _down = Constants.DOWN;
     }
-
-
 
     public void formPiece() {
         for(int i=0; i<4; i++) {
@@ -45,6 +35,17 @@ public class Piece {
         for(int i=0; i<4; i++) {
             _piece[i].setY(_piece[i].getY() + yTranslate);
             _piece[i].setX(_piece[i].getX() + xTranslate);
+        }
+    }
+
+    public void rotate() {
+        double centerX = _piece[2].getX();
+        double centerY = _piece[2].getY();
+        for(int i=0; i<4; i++) {
+            double newXLoc = centerX - centerY + _piece[i].getY();
+            double newYLoc = centerY + centerX - _piece[i].getX();
+            _piece[i].setX(newXLoc);
+            _piece[i].setY(newYLoc);
         }
     }
 }
