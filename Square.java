@@ -17,19 +17,20 @@ public class Square {
         _root.getChildren().add(_square);
     }
 
+    public void removeNode(Square[][] board, int i, int j) {
+        _root.getChildren().remove(board[i][j]);
+    }
+
     public double getY() {
         return _square.getY();
     }
-
     public double getX() {
         return _square.getX();
     }
     public void setX(double xVal) {
-
         _square.setX(xVal);
     }
     public void setY(double yVal) {
-
         _square.setY(yVal);
     }
 }

@@ -13,12 +13,6 @@ public class Piece {
     private int[][] _coords;
     public Square[][] _board;
 
-    double _newXLoc;
-    double _newYLoc;
-
-    double _logicXLoc;
-    double _logicYLoc;
-
     public Piece(int[][] coords, Color color, BorderPane root, Square[][] board) {
         _coords = coords;
         _board = board;
@@ -41,9 +35,9 @@ public class Piece {
 
     public void addToBoard() {
         for(int i=0; i<4; i++) {
-            _logicXLoc = _piece[i].getX()/Constants.SQUARE_WIDTH;
-            _logicYLoc = _piece[i].getY()/Constants.SQUARE_WIDTH;
-            _board[(int) _logicYLoc][(int) _logicXLoc] = _square; //Logically adds square to board
+            double logicXLoc = _piece[i].getX()/Constants.SQUARE_WIDTH;
+            double logicYLoc = _piece[i].getY()/Constants.SQUARE_WIDTH;
+            _board[(int) logicYLoc][(int) logicXLoc] = _square; //Logically adds square to board
         }
     }
 
@@ -54,16 +48,22 @@ public class Piece {
         }
     }
 
+    /**
+     * The problem is that individual squares aren't next to another piece or
+     * the border, so they change positions. I need the entire shape to not
+     * change position if one square can't move.
+     */
     public void rotate() {
         double centerX = _piece[2].getX();
         double centerY = _piece[2].getY();
         for(int i=0; i<4; i++) {
-            _newXLoc = centerX - centerY + _piece[i].getY();
-            _newYLoc = centerY + centerX - _piece[i].getX();
-            if(this.checkMove((int)_newYLoc, (int)_newXLoc)) {
-                _piece[i].setX(_newXLoc);
-                _piece[i].setY(_newYLoc);
-            }
+            double newXLoc = centerX - centerY + _piece[i].getY();
+            double newYLoc = centerY + centerX - _piece[i].getX();
+            _piece[i].setX(newXLoc);
+            _piece[i].setY(newYLoc);
+//            if(this.checkRotate((int) newYLoc, (int) newXLoc)) {
+//
+//            }
         }
     }
 
@@ -79,5 +79,33 @@ public class Piece {
             }
         }
         return true;
+    }
+
+    public boolean checkRotate(int newYLoc, int newXLoc) {
+        newYLoc = newYLoc/Constants.SQUARE_WIDTH;
+        newXLoc = newXLoc/Constants.SQUARE_WIDTH;
+        for(int i=0; i<4; i++) {
+            if(_board[newYLoc][newXLoc]!=null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void checkLines() {
+        for(int i=0; i<Constants.ROWS; i++) {
+            for(int j=0; j<Constants.COLUMNS; j++) {
+                if(_board[i][j]==null) {
+                    break;
+                }
+            }
+            this.clearLine(i);
+        }
+    }
+
+    public void clearLine(int i) {
+        for(int j=1; j<Constants.COLUMNS-1;j++) {
+            _square.removeNode(_board, i, j);
+        }
     }
 }

@@ -121,6 +121,7 @@ public class Game {
         }
 
         public void handle(ActionEvent kf) {
+            _piece.checkLines();
             int potentialY = Constants.DOWN;
             int potentialX = 0;
             if(_piece.checkMove(potentialY, potentialX)) {
