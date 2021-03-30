@@ -8,8 +8,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.util.Duration;
 import javafx.scene.input.KeyEvent;
-import tetris.Constants.*;
-
 
 public class Game {
     private BorderPane _root;
@@ -19,9 +17,7 @@ public class Game {
 
     private double xVal;
     private double yVal;
-    private int _right;
-    private int _left;
-    private int _down;
+
 //make game pane
     private Timeline _timeline;
 
@@ -94,19 +90,20 @@ public class Game {
     private class KeyHandler implements EventHandler<KeyEvent> {
 
         public KeyHandler() {
-            _right = Constants.RIGHT;
-            _left = Constants.LEFT;
-            _down = Constants.DOWN;
 
         }
 
         public void handle(KeyEvent e) {
             switch(e.getCode()) {
                 case LEFT:
-                    _piece.move(_left,0);
+                    if(_piece.checkMove(0, Constants.LEFT)) {
+                        _piece.move(Constants.LEFT,0);
+                    }
                     break;
                 case RIGHT:
-                    _piece.move(_right,0);
+                    if(_piece.checkMove(0, Constants.RIGHT)) {
+                        _piece.move(Constants.RIGHT,0);
+                    }
                     break;
                 case UP:
                     _piece.rotate();
@@ -124,20 +121,14 @@ public class Game {
         }
 
         public void handle(ActionEvent kf) {
-            int potentialY = Constants.DOWN/Constants.SQUARE_WIDTH;
+            int potentialY = Constants.DOWN;
             int potentialX = 0;
             if(_piece.checkMove(potentialY, potentialX)) {
                 _piece.move(0,Constants.DOWN);
             } else {
-                _piece.move(0, 0); //trying not to move
-
+                _piece.addToBoard();
+                Game.this.generatePiece();
             }
-             //Constants.DOWN
-//            if(_piece.canMove(Constants.DOWN)) {
-//                _piece.move(0,Constants.DOWN); //Constants.DOWN
-//            } else {
-//                _piece.move(0,0); //trying to make it not move
-//            }
         }
     }
 }

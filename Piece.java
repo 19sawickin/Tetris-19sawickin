@@ -51,19 +51,8 @@ public class Piece {
         for(int i=0; i<4; i++) {
             _piece[i].setY(_piece[i].getY() + yTranslate);
             _piece[i].setX(_piece[i].getX() + xTranslate);
-            //this.moveLogically(xTranslate, yTranslate);
         }
     }
-
-//    public void moveLogically(int xTranslate, int yTranslate) {
-//        for(int i=0; i<4; i++) {
-//            while(_board[(int)_logicXLoc][(int)_logicYLoc] != null) {
-//                _board[(int)_logicXLoc][(int)_logicYLoc] = null;
-//            }
-//            _board[(int)(_logicXLoc + xTranslate/Constants.SQUARE_WIDTH)]
-//                    [(int)(_logicYLoc + yTranslate/Constants.SQUARE_WIDTH)] = _square;
-//        }
-//    }
 
     public void rotate() {
         double centerX = _piece[2].getX();
@@ -71,37 +60,24 @@ public class Piece {
         for(int i=0; i<4; i++) {
             _newXLoc = centerX - centerY + _piece[i].getY();
             _newYLoc = centerY + centerX - _piece[i].getX();
-            _piece[i].setX(_newXLoc);
-            _piece[i].setY(_newYLoc);
+            if(this.checkMove((int)_newYLoc, (int)_newXLoc)) {
+                _piece[i].setX(_newXLoc);
+                _piece[i].setY(_newYLoc);
+            }
         }
     }
 
-//    public boolean canMove(int direction) {
-//        boolean yes = false;
-//        for(int i=0; i<Constants.ROWS; i++) {
-//            for(int j=0; j<Constants.COLUMNS; j++) {
-//                if(_board[i+direction/Constants.SQUARE_WIDTH][j]==null) {
-//                    yes = true;
-//                } else {
-//                    yes = false;
-//                }
-//            }
-//        }
-//        return yes;
-//    }
-
     public boolean checkMove(int potentialY, int potentialX) {
-        boolean empty = false;
+        potentialY = potentialY/Constants.SQUARE_WIDTH;
+        potentialX = potentialX/Constants.SQUARE_WIDTH;
         for(int i=0; i<4; i++) {
             double futureY = _piece[i].getY()/Constants.SQUARE_WIDTH + potentialY;
             double futureX = _piece[i].getX()/Constants.SQUARE_WIDTH + potentialX;
-            if(_board[(int)futureY][(int)futureX]==null) {
-                empty = true;
-            } else {
-                this.addToBoard();
-                empty = false;
+            System.out.println("futureY= " + futureY + "future=" + futureX);
+            if(_board[(int)futureY][(int)futureX]!=null) {
+                return false;
             }
         }
-        return empty;
+        return true;
     }
 }

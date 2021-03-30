@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 public class Constants {
      // TODO: fill this class in with any more constants you might need!
 
-    public static final int DURATION = 1;
+    public static final double DURATION = 0.25;
      // width of each square
     public static final int SQUARE_WIDTH = 30;
 
