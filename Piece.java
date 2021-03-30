@@ -73,7 +73,7 @@ public class Piece {
         for(int i=0; i<4; i++) {
             double futureY = _piece[i].getY()/Constants.SQUARE_WIDTH + potentialY;
             double futureX = _piece[i].getX()/Constants.SQUARE_WIDTH + potentialX;
-            System.out.println("futureY= " + futureY + "future=" + futureX);
+            //System.out.println("futureY= " + futureY + "future=" + futureX);
             if(_board[(int)futureY][(int)futureX]!=null) {
                 return false;
             }

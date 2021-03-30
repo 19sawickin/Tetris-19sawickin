@@ -127,7 +127,7 @@ public class Game {
                 _piece.move(0,Constants.DOWN);
             } else {
                 _piece.addToBoard();
-                Game.this.generatePiece();
+                _piece = Game.this.generatePiece();
             }
         }
     }
