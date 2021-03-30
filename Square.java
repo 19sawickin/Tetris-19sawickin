@@ -18,7 +18,11 @@ public class Square {
     }
 
     public void removeNode(Square[][] board, int i, int j) {
-        _root.getChildren().remove(board[i][j]);
+        _root.getChildren().remove(board[i][j]); //SOMETHING'S WRONG HERE!!!
+    }
+
+    public Rectangle getSquare() {
+        return _square;
     }
 
     public double getY() {

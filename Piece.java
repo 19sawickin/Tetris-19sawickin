@@ -92,20 +92,28 @@ public class Piece {
         return true;
     }
 
-    public void checkLines() {
-        for(int i=0; i<Constants.ROWS; i++) {
-            for(int j=0; j<Constants.COLUMNS; j++) {
-                if(_board[i][j]==null) {
-                    break;
+    public void clearLine() {
+        for(int i=1; i<Constants.ROWS-1; i++) {
+            if(rowIsFull(i)) {
+                for(int j=1; j<Constants.COLUMNS-1;j++) {
+                    _root.getChildren().remove(_board[i][j].getSquare());
+                }
+                //moving squares down
+                for(int k=i; k>0;k--) {
+                    for(int j=1; j<Constants.COLUMNS-1; j++) {
+
+                    }
                 }
             }
-            this.clearLine(i);
         }
     }
 
-    public void clearLine(int i) {
-        for(int j=1; j<Constants.COLUMNS-1;j++) {
-            _square.removeNode(_board, i, j);
-        }
+    public boolean rowIsFull(int row) {
+            for(int j=0; j<Constants.COLUMNS; j++) {
+                if(_board[row][j]==null) {
+                    return false;
+                }
+            }
+            return true;
     }
 }
