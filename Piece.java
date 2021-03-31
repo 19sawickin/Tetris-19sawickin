@@ -51,15 +51,17 @@ public class Piece {
      * the border, so they change positions. I need the entire shape to not
      * change position if one square can't move.
      */
-    public void rotate() {
-        double centerX = _piece[1].getX();
-        double centerY = _piece[1].getY();
-        for(int i=0; i<4; i++) {
-            double newXLoc = centerX - centerY + _piece[i].getY();
-            double newYLoc = centerY + centerX - _piece[i].getX();
-            if(this.checkRotate((int) newYLoc, (int) newXLoc)) {
-                _piece[i].setX(newXLoc);
-                _piece[i].setY(newYLoc);
+    public void rotate(Boolean notSquarePiece) {
+        if(notSquarePiece) {
+            double centerX = _piece[1].getX();
+            double centerY = _piece[1].getY();
+            for(int i=0; i<4; i++) {
+                double newXLoc = centerX - centerY + _piece[i].getY();
+                double newYLoc = centerY + centerX - _piece[i].getX();
+                if(this.checkRotate((int) newYLoc, (int) newXLoc)) {
+                    _piece[i].setX(newXLoc);
+                    _piece[i].setY(newYLoc);
+                }
             }
         }
     }

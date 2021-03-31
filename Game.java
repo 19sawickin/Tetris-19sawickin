@@ -17,6 +17,7 @@ public class Game {
     private Piece _piece;
     private Label _pauseLabel;
     private Label _gameOverLabel;
+    private Boolean _notSquarePiece;
 
     private double xVal;
     private double yVal;
@@ -33,6 +34,7 @@ public class Game {
         this.setupTimeline(gameOverLabel);
         gamePane.addEventHandler(KeyEvent.KEY_PRESSED,
                 new KeyHandler(pauseLabel));
+        _notSquarePiece = true;
     }
 
     public Piece generatePiece() {
@@ -47,6 +49,7 @@ public class Game {
                 break;
             case 2:
                 piece = new Piece(Constants.SQUARE_PIECE_COORDS, Color.PINK, _gamePane, _board);
+                _notSquarePiece = false;
                 break;
             case 3:
                 piece = new Piece(Constants.R_PIECE_COORDS, Color.YELLOW, _gamePane, _board);
@@ -115,7 +118,7 @@ public class Game {
                     }
                     break;
                 case UP:
-                    _piece.rotate();
+                    _piece.rotate(_notSquarePiece);
                 case DOWN:
                     if(_piece.checkMove(Constants.DOWN, 0)) {
                         _piece.move(0,Constants.DOWN);
