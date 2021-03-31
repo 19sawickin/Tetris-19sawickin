@@ -7,7 +7,6 @@ import javafx.scene.shape.*;
 public class Square {
 
     private Rectangle _square;
-    private Pane _gamePane;
 
     public Square(Pane gamePane, Color color) {
         _square = new Rectangle(Constants.SQUARE_WIDTH, Constants.SQUARE_WIDTH);

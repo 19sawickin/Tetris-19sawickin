@@ -6,9 +6,6 @@ import javafx.scene.paint.Color;
 public class Piece {
 
     private Square[] _piece;
-    private double xVal;
-    private double yVal;
-    private Color _color;
     private int[][] _coords;
     public Square[][] _board;
 
@@ -16,16 +13,15 @@ public class Piece {
         _coords = coords;
         _board = board;
         _piece = new Square[4];
-        _color = color;
-        this.formPiece(gamePane);
+        this.formPiece(gamePane, color);
     }
 
-    public void formPiece(Pane gamePane) {
+    public void formPiece(Pane gamePane, Color color) {
         for(int i=0; i<4; i++) {
-            Square square = new Square(gamePane, _color);
-            xVal = _coords[i][0];
+            Square square = new Square(gamePane, color);
+            double xVal = _coords[i][0];
             square.setX(Constants.X_OFFSET + xVal);
-            yVal = _coords[i][1];
+            double yVal = _coords[i][1];
             square.setY(Constants.Y_OFFSET + yVal);
             _piece[i] = square;
         }
@@ -46,24 +42,44 @@ public class Piece {
         }
     }
 
-    /**
-     * The problem is that individual squares aren't next to another piece or
-     * the border, so they change positions. I need the entire shape to not
-     * change position if one square can't move.
-     */
-    public void rotate(Boolean notSquarePiece) {
-        if(notSquarePiece) {
+    public void rotate() {
+        int rotateCounter = 0;
+        if(!this.checkIfSquare()) {
             double centerX = _piece[1].getX();
             double centerY = _piece[1].getY();
             for(int i=0; i<4; i++) {
                 double newXLoc = centerX - centerY + _piece[i].getY();
                 double newYLoc = centerY + centerX - _piece[i].getX();
-                if(this.checkRotate((int) newYLoc, (int) newXLoc)) {
-                    _piece[i].setX(newXLoc);
-                    _piece[i].setY(newYLoc);
+                if(!this.checkRotate((int) newYLoc, (int) newXLoc)) {
+                    break;
+                }
+                rotateCounter++;
+                if(rotateCounter==4) {
+                    this.rotatePiece();
                 }
             }
         }
+    }
+
+    public void rotatePiece() {
+        double centerX = _piece[1].getX();
+        double centerY = _piece[1].getY();
+        for(int i=0; i<4; i++) {
+            double newXLoc = centerX - centerY + _piece[i].getY();
+            double newYLoc = centerY + centerX - _piece[i].getX();
+            _piece[i].setX(newXLoc);
+            _piece[i].setY(newYLoc);
+        }
+    }
+
+    public boolean checkIfSquare() {
+        Boolean isSquare;
+        if(_coords==Constants.SQUARE_PIECE_COORDS) {
+            isSquare=true;
+        } else {
+            isSquare=false;
+        }
+        return isSquare;
     }
 
     public boolean checkMove(int potentialY, int potentialX) {
@@ -82,12 +98,10 @@ public class Piece {
     public boolean checkRotate(int newYLoc, int newXLoc) {
         newYLoc = newYLoc/Constants.SQUARE_WIDTH;
         newXLoc = newXLoc/Constants.SQUARE_WIDTH;
-        for(int i=0; i<4; i++) {
-            if(newXLoc<1 || newXLoc>Constants.COLUMNS-1 || newYLoc>Constants.ROWS-1) {
-                return false;
-            } else if(_board[newYLoc][newXLoc]!=null) {
-                return false;
-            }
+        if(newXLoc<1 || newXLoc>Constants.COLUMNS-1 || newYLoc>Constants.ROWS-1) {
+            return false;
+        } else if(_board[newYLoc][newXLoc]!=null) {
+            return false;
         }
         return true;
     }

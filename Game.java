@@ -13,17 +13,13 @@ import javafx.scene.input.KeyEvent;
 public class Game {
     private Pane _gamePane;
     private Square[][] _board;
-    private Square _square;
     private Piece _piece;
     private Label _pauseLabel;
     private Label _gameOverLabel;
-    private Boolean _notSquarePiece;
 
     private double xVal;
     private double yVal;
 
-
-//make game pane
     private Timeline _timeline;
 
     public Game(Pane gamePane, Label pauseLabel, Label gameOverLabel) {
@@ -34,7 +30,6 @@ public class Game {
         this.setupTimeline(gameOverLabel);
         gamePane.addEventHandler(KeyEvent.KEY_PRESSED,
                 new KeyHandler(pauseLabel));
-        _notSquarePiece = true;
     }
 
     public Piece generatePiece() {
@@ -49,7 +44,6 @@ public class Game {
                 break;
             case 2:
                 piece = new Piece(Constants.SQUARE_PIECE_COORDS, Color.PINK, _gamePane, _board);
-                _notSquarePiece = false;
                 break;
             case 3:
                 piece = new Piece(Constants.R_PIECE_COORDS, Color.YELLOW, _gamePane, _board);
@@ -81,16 +75,16 @@ public class Game {
                 xVal = j*Constants.SQUARE_WIDTH;
                 yVal = i*Constants.SQUARE_WIDTH;
                 if(i==0 || i==Constants.ROWS-1) { //Top and bottom
-                    _square = new Square(_gamePane, Color.GRAY);
-                    _board[i][j] = _square;
-                    _square.setX(xVal);
-                    _square.setY(yVal);
+                    Square square = new Square(_gamePane, Color.GRAY);
+                    _board[i][j] = square;
+                    square.setX(xVal);
+                    square.setY(yVal);
                 }
                 if(j==0 || j==Constants.COLUMNS-1) { //side bars
-                    _square = new Square(_gamePane, Color.GRAY);
-                    _board[i][j] = _square;
-                    _square.setX(xVal);
-                    _square.setY(yVal);
+                    Square square = new Square(_gamePane, Color.GRAY);
+                    _board[i][j] = square;
+                    square.setX(xVal);
+                    square.setY(yVal);
                 }
             }
         }
@@ -118,7 +112,7 @@ public class Game {
                     }
                     break;
                 case UP:
-                    _piece.rotate(_notSquarePiece);
+                    _piece.rotate();
                 case DOWN:
                     if(_piece.checkMove(Constants.DOWN, 0)) {
                         _piece.move(0,Constants.DOWN);

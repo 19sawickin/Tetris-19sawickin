@@ -29,6 +29,5 @@ public class Constants {
     public static final int[][] SEVEN_PIECE_COORDS = { {0, 0}, {0, SQUARE_WIDTH}, {0, 2*SQUARE_WIDTH}, {-1*SQUARE_WIDTH, 0} };
     public static final int[][] BACK_Z_COORDS = { {0, 0}, {-1*SQUARE_WIDTH, 0}, {-1*SQUARE_WIDTH, -1*SQUARE_WIDTH}, {-2*SQUARE_WIDTH, -1*SQUARE_WIDTH} };
     public static final int[][] Z_PIECE_COORDS = { {0, 0}, {1*SQUARE_WIDTH, 0}, {1*SQUARE_WIDTH, 1*SQUARE_WIDTH}, {2*SQUARE_WIDTH, 1*SQUARE_WIDTH} };
-    public static final int[][] INITIAL_COORDS = I_PIECE_COORDS;
 
 }
