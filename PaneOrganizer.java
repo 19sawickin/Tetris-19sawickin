@@ -3,27 +3,45 @@ package tetris;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 public class PaneOrganizer {
     private BorderPane _root;
-    private HBox _bottomPane;
+    private Label _pauseLabel;
+    private Label _gameOverLabel;
 
     public PaneOrganizer() {
         _root = new BorderPane();
-        _bottomPane = new HBox();
-        this.addButton();
-        _root.setBottom(_bottomPane);
-        new Game(_root);
-
+        Pane gamePane = new Pane();
+        HBox bottomPane = new HBox();
+        this.addButton(bottomPane);
+        this.addLabel(bottomPane);
+        _root.setBottom(bottomPane);
+        _root.setCenter(gamePane);
+        gamePane.setFocusTraversable(true);
+        new Game(_root, _pauseLabel, _gameOverLabel);
     }
 
-    public void addButton() {
+    public void addButton(HBox bottomPane) {
         Button b1 = new Button("Quit");
         b1.setOnAction(new tetris.PaneOrganizer.QuitHandler());
-        _bottomPane.getChildren().add(b1);
-        _bottomPane.setFocusTraversable(false);
-        //b1.setFocusTraversable(false);
+        bottomPane.getChildren().add(b1);
+        bottomPane.setFocusTraversable(false);
+        b1.setFocusTraversable(false);
+    }
+
+    public void addLabel(HBox bottomPane) {
+        _pauseLabel = new Label("PAUSE");
+        _pauseLabel.setTextFill(Color.RED);
+        _pauseLabel.setVisible(false);
+        // gameOverLabel
+        _gameOverLabel = new Label("GAME OVER");
+        _gameOverLabel.setTextFill(Color.RED);
+        _gameOverLabel.setVisible(false);
+        bottomPane.getChildren().addAll(_pauseLabel, _gameOverLabel);
+        bottomPane.setSpacing(50);
     }
 
     public BorderPane getRoot() {
