@@ -16,10 +16,6 @@ public class Game {
     private Piece _piece;
     private Label _pauseLabel;
     private Label _gameOverLabel;
-
-    private double xVal;
-    private double yVal;
-
     private Timeline _timeline;
 
     public Game(Pane gamePane, Label pauseLabel, Label gameOverLabel) {
@@ -72,8 +68,8 @@ public class Game {
     public void setupBorder() {
         for(int i=0; i<Constants.ROWS; i++) {
             for(int j=0; j<Constants.COLUMNS; j++) {
-                xVal = j*Constants.SQUARE_WIDTH;
-                yVal = i*Constants.SQUARE_WIDTH;
+                int xVal = j*Constants.SQUARE_WIDTH;
+                int yVal = i*Constants.SQUARE_WIDTH;
                 if(i==0 || i==Constants.ROWS-1) { //Top and bottom
                     Square square = new Square(_gamePane, Color.GRAY);
                     _board[i][j] = square;
