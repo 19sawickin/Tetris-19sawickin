@@ -241,8 +241,8 @@ public class Game {
         }
 
         /**
-         * This method returns false if a row on the board is unfilled
-         * and true if a row on the board is full.
+         * This method returns false if a square on the board in a specific
+         * row is unfilled and true if all the squares in a row are filled.
          */
         public boolean rowIsFull(int row) {
             for(int j=0; j<Constants.COLUMNS; j++) {
