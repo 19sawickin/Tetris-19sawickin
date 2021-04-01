@@ -16,7 +16,8 @@ logically and graphically. The game ends when there's a piece in the 1st row of 
 KNOWN BUGS:
 Sometimes the game adds an additional piece at the top of the board that overlaps a piece below
 it, even if there is a piece in the top row of the board and the game should be over. After
-this piece overlaps the piece in the top row, however, the game ends.
+this piece overlaps the piece in the top row, however, the game ends. Post @890 said that
+this was ok on Piazza, so I'm not sure if this counts as a bug or not.
 
 HOURS SPENT:
 Too many. (But like, probably somewhere around 30 if I had to guess).
