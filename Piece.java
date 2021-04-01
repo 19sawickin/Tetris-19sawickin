@@ -3,12 +3,21 @@ package tetris;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+/**
+ * The Piece class is responsible for putting together a tetris piece that varies
+ * its color and shape depending on the parameters passed into its constructor. Each
+ * piece is comprised of four individual squares and added to a 1D array called _piece.
+ */
 public class Piece {
 
     private Square[] _piece;
     private int[][] _coords;
     public Square[][] _board;
 
+    /**
+     * The Piece constructor is responsible for constructing the 1D array that
+     * will hold all of the squares in one piece.
+     */
     public Piece(int[][] coords, Color color, Pane gamePane, Square[][] board) {
         _coords = coords;
         _board = board;
@@ -16,6 +25,10 @@ public class Piece {
         this.formPiece(gamePane, color);
     }
 
+    /**
+     * This method forms four squares and stores them in a 1D array and also
+     * sets their locations graphically.
+     */
     public void formPiece(Pane gamePane, Color color) {
         for(int i=0; i<4; i++) {
             Square square = new Square(gamePane, color);
@@ -27,6 +40,9 @@ public class Piece {
         }
     }
 
+    /**
+     * This method adds the piece to the board logically.
+     */
     public void addToBoard() {
         for(int i=0; i<4; i++) {
             double logicXLoc = _piece[i].getX()/Constants.SQUARE_WIDTH;
@@ -35,6 +51,10 @@ public class Piece {
         }
     }
 
+    /**
+     * This method is responsible for graphically moving the piece down,
+     * left, or right depending on which key is pressed.
+     */
     public void move(int xTranslate, int yTranslate) {//remove instance variable
         for(int i=0; i<4; i++) {
             _piece[i].setY(_piece[i].getY() + yTranslate);
@@ -42,6 +62,17 @@ public class Piece {
         }
     }
 
+    /**
+     * This method is responsible for initiating the check to see if a piece can
+     * rotate. If it can, it then calls the method that actually rotates the piece.
+     * This method first checks to see if the piece in question is a square. If it is,
+     * then the piece will not even check to see if it can rotate. If it's not a square,
+     * equations are used to determine the future locations of individual squares in
+     * the piece. If the future squares are out of the board's bounds or in a spot that's
+     * occupied by another square, the piece cannot rotate. The rotate counter checks to
+     * see if all 4 squares in the piece can rotate, and if this is true, then the method
+     * to rotate the piece is called.
+     */
     public void rotate() {
         int rotateCounter = 0;
         if(!this.checkIfSquare()) {
@@ -61,6 +92,9 @@ public class Piece {
         }
     }
 
+    /**
+     * This method graphically rotates the piece.
+     */
     public void rotatePiece() {
         double centerX = _piece[1].getX();
         double centerY = _piece[1].getY();
@@ -72,6 +106,9 @@ public class Piece {
         }
     }
 
+    /**
+     * This method checks to see if the piece is a square.
+     */
     public boolean checkIfSquare() {
         Boolean isSquare;
         if(_coords==Constants.SQUARE_PIECE_COORDS) {
@@ -82,6 +119,9 @@ public class Piece {
         return isSquare;
     }
 
+    /**
+     * This method checks to see if a move is legal.
+     */
     public boolean checkMove(int potentialY, int potentialX) {
         potentialY = potentialY/Constants.SQUARE_WIDTH;
         potentialX = potentialX/Constants.SQUARE_WIDTH;
@@ -95,6 +135,10 @@ public class Piece {
         return true;
     }
 
+    /**
+     * This method checks to see if an individual square can rotate. If it can,
+     * this method will return 'true'. If it can't, this method will return 'false'.
+     */
     public boolean checkRotate(int newYLoc, int newXLoc) {
         newYLoc = newYLoc/Constants.SQUARE_WIDTH;
         newXLoc = newXLoc/Constants.SQUARE_WIDTH;

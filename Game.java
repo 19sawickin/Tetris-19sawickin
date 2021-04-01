@@ -10,6 +10,12 @@ import javafx.scene.paint.*;
 import javafx.util.Duration;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * The Game class contains most of the logic for the actual game. It is
+ * responsible for creating the game's board and setting up the border, as
+ * well as for generating pieces. The Game class also contains the timeline
+ * that is responsible for moving and animating everything.
+ */
 public class Game {
     private Pane _gamePane;
     private Square[][] _board;
@@ -18,6 +24,10 @@ public class Game {
     private Label _gameOverLabel;
     private Timeline _timeline;
 
+    /**
+     * The Game constructor is responsible for creating a new time handler
+     * and key handler and generating the border and first piece.
+     */
     public Game(Pane gamePane, Label pauseLabel, Label gameOverLabel) {
         _gamePane = gamePane;
         _board = new Square[Constants.ROWS][Constants.COLUMNS];
@@ -28,6 +38,10 @@ public class Game {
                 new KeyHandler(pauseLabel));
     }
 
+    /**
+     * This method is responsible for generating a random piece using
+     * coordinates from a static array in the constants class.
+     */
     public Piece generatePiece() {
         int randInt = (int)(Math.random()*7);
         Piece piece = null;
@@ -57,6 +71,9 @@ public class Game {
         return piece;
     }
 
+    /**
+     * This method sets up the timeline
+     */
     public void setupTimeline(Label gameOverLabel) {
         _timeline = new Timeline
                 (new KeyFrame(Duration.seconds(Constants.DURATION),
@@ -65,6 +82,11 @@ public class Game {
         _timeline.play();
     }
 
+    /**
+     * This method sets up the border which is comprised of the same
+     * Tetris squares that the pieces are made of. Importantly, they
+     * are also added to the board array.
+     */
     public void setupBorder() {
         for(int i=0; i<Constants.ROWS; i++) {
             for(int j=0; j<Constants.COLUMNS; j++) {
@@ -86,15 +108,33 @@ public class Game {
         }
     }
 
+    /**
+     * The KeyHandler is responsible for executing the appropriate action
+     * when a certain key is pressed.
+     */
     private class KeyHandler implements EventHandler<KeyEvent> {
 
         private int _pause;
 
+        /**
+         * The KeyHandler constructor takes in the pauseLabel parameter and
+         * also sets 'pause' equal to zero. Whenever 'P' is pressed, this variable
+         * increases by 1. So the next time 'P' is pressed, the remainder when _pause
+         * is divided by two is not 0, meaning the timeline resumes.
+         */
         public KeyHandler(Label pauseLabel) {
             _pauseLabel = pauseLabel;
             _pause = 0;
         }
 
+        /**
+         * The handle method takes care of what happens when keys are
+         * pressed. If left/right/down are pressed, the piece will move
+         * in the respective direction. If space is pressed, the piece will
+         * fall as far as it can. When 'P' is pressed, the timeline pauses.
+         * When the up arrow is pressed, the piece will first check to see if
+         * it can rotate, then will rotate if it can.
+         */
         public void handle(KeyEvent e) {
             switch(e.getCode()) {
                 case LEFT:
@@ -136,12 +176,28 @@ public class Game {
         }
     }
 
+    /**
+     * The TimeHandler is responsible for setting up the timeline which updates
+     * every 0.25 seconds. Every time the timeline updates, a check is run to see
+     * if the game is over (meaning there's a square in the top row of the board)
+     * then checks to see if a line needs to be cleared. It also automatically moves
+     * a piece that's generated down by one square every update.
+     */
     private class TimeHandler implements EventHandler<ActionEvent> {
 
+        /**
+         * The time handler constructor assigns the gameOverLabel.
+         */
         public TimeHandler(Label gameOverLabel) {
             _gameOverLabel = gameOverLabel;
         }
 
+        /**
+         * The handle method checks to see if the game is over or if
+         * any lines need to be cleared, then checks to see if the piece
+         * that was generated can move any further. If it can't then it adds
+         * the piece to the board and generates another piece.
+         */
         public void handle(ActionEvent kf) {
             this.checkGameOver();
             this.clearLine();
@@ -155,6 +211,12 @@ public class Game {
             }
         }
 
+        /**
+         * This method is responsible for checking to see if any lines need
+         * to be cleared, then removing the pieces from the board, and both
+         * logically and graphically moving all of the pieces above the removed
+         * row down by one row.
+         */
         public void clearLine() {
             for(int i=1; i<Constants.ROWS-1; i++) {
                 if(rowIsFull(i)) {
@@ -178,6 +240,10 @@ public class Game {
             }
         }
 
+        /**
+         * This method returns false if a row on the board is unfilled
+         * and true if a row on the board is full.
+         */
         public boolean rowIsFull(int row) {
             for(int j=0; j<Constants.COLUMNS; j++) {
                 if(_board[row][j]==null) {
@@ -187,6 +253,11 @@ public class Game {
             return true;
         }
 
+        /**
+         * This method checks to see if there are any squares in the top row
+         * of the board, and if there is, stops the timeline and makes the
+         * 'game over' label visible.
+         */
         public void checkGameOver() {
             for(int j=1; j<Constants.COLUMNS-1; j++) {
                 if(_board[1][j]!=null) {

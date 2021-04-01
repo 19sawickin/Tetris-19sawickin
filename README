@@ -1,0 +1,22 @@
+tetris README
+
+HANDIN:
+Final handin
+
+
+DESIGN CHOICES:
+The setup for tetris is pretty standard. I created a root pane which contained the bottomPane
+(with the quit button and labels) and the gamePane (with the actual game pieces and the board).
+The board is a 2D array that adds pieces to it only when the pieces can fall no further. When a
+line on a board is full, it is cleared, and everything above the cleared line moves down
+logically and graphically. The game ends when there's a piece in the 1st row of the board
+(not the 0th row because the boarder is contained in the 0th row).
+
+
+KNOWN BUGS:
+Sometimes the game adds an additional piece at the top of the board that overlaps a piece below
+it, even if there is a piece in the top row of the board and the game should be over. After
+this piece overlaps the piece in the top row, however, the game ends.
+
+HOURS SPENT:
+Too many. (But like, probably somewhere around 30 if I had to guess).
