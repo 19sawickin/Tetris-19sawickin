@@ -32,7 +32,7 @@ public class PaneOrganizer {
         _root.setBottom(bottomPane);
         _root.setCenter(gamePane);
         gamePane.setFocusTraversable(true);
-        new Game(_root, _pauseLabel, _gameOverLabel);
+        new Game(gamePane, _pauseLabel, _gameOverLabel);
     }
 
     /**
